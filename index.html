@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Sederhana</title>
+</head>
+<body>
+    <div id="app">
+        <h1>Kalkulator Sederhana</h1>
+        <input type="text" v-model="inputExpression">
+        <div>
+            <button v-for="button in numericButtons" @click="appendToExpression(button)">{{ button }}</button>
+        </div>
+        <div>
+            <button v-for="button in operatorButtons" @click="appendToExpression(button)">{{ button }}</button>
+        </div>
+        <button @click="calculateResult">=</button>
+        <button @click="clearInput">C</button>
+        <div>
+            <h2>Hasil: {{ result }}</h2>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                inputExpression: '',
+                result: 0,
+                operatorButtons: ['+', '-', '*', '/'],
+                numericButtons: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'],
+            },
+            methods: {
+                appendToExpression(button) {
+                    this.inputExpression += button;
+                },
+                clearInput() {
+                    this.inputExpression = '';
+                    this.result = 0;
+                },
+                calculateResult() {
+                    try {
+                        this.result = eval(this.inputExpression);
+                    } catch (error) {
+                        this.result = 'Error';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
